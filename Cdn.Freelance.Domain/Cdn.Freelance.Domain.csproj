@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Infrastructure" />
     <InternalsVisibleTo Include="Cdn.Freelance.Domain.Tests" />
   </ItemGroup>
 </Project>

@@ -7,9 +7,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{911CCA27
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdn.Freelance.Domain", "Cdn.Freelance.Domain\Cdn.Freelance.Domain.csproj", "{A7273367-FC41-4822-83F7-EAE8FA2E527E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdn.Freelance.Domain.Tests", "Cdn.Freelance.Domain.Tests\Cdn.Freelance.Domain.Tests.csproj", "{76AA715F-3381-426D-99AE-C46AD1959D4C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdn.Freelance.Domain.Tests", "Cdn.Freelance.Domain.Tests\Cdn.Freelance.Domain.Tests.csproj", "{76AA715F-3381-426D-99AE-C46AD1959D4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdn.Freelance.Infrastructure", "Cdn.Freelance.Infrastructure\Cdn.Freelance.Infrastructure.csproj", "{68CA2FA4-456E-493F-BF93-ABD6BFCB3590}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cdn.Freelance.Infrastructure", "Cdn.Freelance.Infrastructure\Cdn.Freelance.Infrastructure.csproj", "{68CA2FA4-456E-493F-BF93-ABD6BFCB3590}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cdn.Freelance.Api", "Cdn.Freelance.Api\Cdn.Freelance.Api.csproj", "{46EEEE99-8196-4F6C-81A6-1CAF7C12BB03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{68CA2FA4-456E-493F-BF93-ABD6BFCB3590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68CA2FA4-456E-493F-BF93-ABD6BFCB3590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68CA2FA4-456E-493F-BF93-ABD6BFCB3590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46EEEE99-8196-4F6C-81A6-1CAF7C12BB03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46EEEE99-8196-4F6C-81A6-1CAF7C12BB03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46EEEE99-8196-4F6C-81A6-1CAF7C12BB03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46EEEE99-8196-4F6C-81A6-1CAF7C12BB03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
