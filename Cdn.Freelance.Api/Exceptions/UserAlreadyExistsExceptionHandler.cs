@@ -1,44 +1,21 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Runtime.Serialization;
+﻿using System.Net;
 
 namespace Cdn.Freelance.Api.Exceptions
 {
     /// <summary>
     /// Handle user already exist exception. 
     /// </summary>
-    public class UserAlreadyExistsExceptionHandler : IExceptionHandler
+    public class UserAlreadyExistsExceptionHandler : BaseExceptionHandler<UserAlreadyExistsException>
     {
-        private readonly ILogger<DefaultExceptionHandler> _logger;
-        private const string ErrorMessage = "User name or email address already exists.";
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="logger"></param>
-        public UserAlreadyExistsExceptionHandler(ILogger<DefaultExceptionHandler> logger)
+        /// <inheritdoc />
+        public override HttpStatusCode StatusCode => HttpStatusCode.BadRequest;
+
+        /// <inheritdoc />
+        public override string ErrorMessage => "User name or email address already exists.";
+
+        /// <inheritdoc />
+        public UserAlreadyExistsExceptionHandler(ILogger<BaseExceptionHandler<UserAlreadyExistsException>> logger) : base(logger)
         {
-            _logger = logger;
-        }
-
-        /// <inheritdoc/>
-        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
-        {
-            if (exception is not UserAlreadyExistsException)
-                return true;
-
-            _logger.LogError(exception, ErrorMessage);
-
-            await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
-            {
-                Status = (int)HttpStatusCode.BadRequest,
-                Type = exception.GetType().Name,
-                Title = ErrorMessage,
-                Detail = exception.Message,
-                Instance = $"{httpContext.Request.Method} {httpContext.Request.Path}"
-            }, cancellationToken: cancellationToken);
-
-            return true;
         }
     }
 

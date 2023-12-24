@@ -106,7 +106,9 @@ namespace Cdn.Freelance.Api
             });
 
             builder.Services.AddProblemDetails();
+
             builder.Services.AddExceptionHandler<UserAlreadyExistsExceptionHandler>();
+            builder.Services.AddExceptionHandler<ItemNotFoundExceptionHandler>();
             builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
             var app = builder.Build();

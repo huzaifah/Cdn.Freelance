@@ -59,5 +59,19 @@ namespace Cdn.Freelance.Api.Controllers.Users
         {
             return await _mediator.Send(new GetAllUsers.Query(limit, offset));
         }
+
+        /// <summary>
+        /// Get user by identifier.
+        /// </summary>
+        /// <param name="identifier">User identifier.</param>
+        /// <returns>User information.</returns>
+        [HttpGet, Route("{identifier}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [SwaggerResponseExample(200, typeof(UserOutputExample))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<UserOutput> GetUserAsync([FromRoute, Required, MaxLength(50)] string identifier)
+        {
+            return await _mediator.Send(new GetUserByIdentifier.Query(identifier));
+        }
     }
 }
