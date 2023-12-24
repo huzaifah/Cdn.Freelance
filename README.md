@@ -9,51 +9,61 @@ This app is to manage the CDN freelancers information:
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
 Install the following tools before running the app.
 
 ```
-* Visual Studio 2022
-* pgAdmin tool
-* Postman
+1. Visual Studio 2022
+2. pgAdmin tool
+3. Postman (optional)
 ```
 
-### Installing
+### Create the database
 
-A step by step series of examples that tell you how to get a development env running
+Create a new Postgres database and name it `freelance`.
 
-Say what the step will be
+Execute the database scripts located in `..\Cdn.Freelance\Scripts` to create the necessary tables.
 
-```
-Give the example
-```
+### Update application settings
 
-And repeat
+Update the appsettings.json file for database connection.
 
 ```
-until finished
+"ConnectionStrings": {
+    "FreelanceDatabase": "Host=localhost;Port=5432;Database=freelance;User Id=postgres;Password={your_password};"
+},
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Update the appsettings.json file with your chosen Open ID Identity Provider. Example:
 
 ```
-Give an example
+"Okta": {
+    "OktaDomain": "https://dev-50457353.okta.com",
+    "AuthorizationServerId": "default",
+    "Audience": "api://default"
+}
 ```
 
-## Deployment
+### Running the app
 
-Add additional notes about how to deploy this on a live system
+Execute `Cdn.Freelance.Api` project with `https`.
+
+```
+dotnet run --project C:\Cdn.Freelance\Cdn.Freelance.Api\Cdn.Freelance.Api.csproj --launch-profile https
+```
+
+Enter this URL to view the API documentation page.
+
+```
+https://localhost:7099/swagger
+```
+
+Use your favourite REST client tool to make request to available endpoints.
+
+Ensure that you have valid token before making the request.
 
 ## Built With
 
@@ -64,6 +74,6 @@ Add additional notes about how to deploy this on a live system
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/huzaifah/Cdn.Freelance/tags). 
 
-## Authors
+## Author
 
-* **Huzaifah Dzulkifli** - *Initial work* -
+* **Huzaifah Dzulkifli** - *Initial work*
