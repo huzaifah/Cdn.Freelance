@@ -15,7 +15,7 @@ namespace Cdn.Freelance.Infrastructure.EntityConfigurations
             userConfiguration.Property(u => u.IdentityGuid).HasMaxLength(250).IsRequired();
             userConfiguration.Property(u => u.EmailAddress).HasMaxLength(250).IsRequired();
             userConfiguration.Property(u => u.UserName).HasMaxLength(250).IsRequired();
-            userConfiguration.Property(u => u.PhoneNumber).HasMaxLength(250).IsRequired();
+            userConfiguration.Property(u => u.PhoneNumber).HasMaxLength(50).IsRequired();
             userConfiguration.Property(u => u.Hobby).HasMaxLength(250);
 
             userConfiguration.HasKey(u => u.Id);

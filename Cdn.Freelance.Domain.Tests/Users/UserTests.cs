@@ -17,7 +17,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
 
         public UserTests()
         {
-            _user = new User(IdentifierGuid, UserName, EmailAddress, PhoneNumber, Hobby);
+            _user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, Hobby);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         [Fact]
         public void User_WithNoHobby_Ok()
         {
-            var userWithNoHobby = new User(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
+            var userWithNoHobby = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
             userWithNoHobby.Hobby.Should().BeNull();
         }
 
@@ -41,7 +41,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         public void User_InitializeSkillSets_Ok()
         {
             var skillSets = new List<string> { SkillOne, SkillTwo };
-            var user = new User(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
+            var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
             user.UpdateSkillSets(skillSets);
 
             user.SkillSets.Should().HaveCount(skillSets.Count);
@@ -53,7 +53,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         public void User_RemoveExistingSkillSets_Ok()
         {
             var skillSets = new List<string> { SkillOne, SkillTwo };
-            var user = new User(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
+            var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
             user.UpdateSkillSets(skillSets);
 
             skillSets.RemoveAt(1);
@@ -67,7 +67,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         public void User_AddNewSkillSets_Ok()
         {
             var skillSets = new List<string> { SkillOne, SkillTwo };
-            var user = new User(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
+            var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
             user.UpdateSkillSets(skillSets);
 
             skillSets.Add(SkillThree);

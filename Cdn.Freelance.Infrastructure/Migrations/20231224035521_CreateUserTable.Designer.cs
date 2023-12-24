@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cdn.Freelance.Infrastructure.Migrations
 {
     [DbContext(typeof(FreelanceContext))]
-    [Migration("20231221080420_CreateUserTable")]
+    [Migration("20231224035521_CreateUserTable")]
     partial class CreateUserTable
     {
         /// <inheritdoc />
@@ -40,7 +40,8 @@ namespace Cdn.Freelance.Infrastructure.Migrations
 
                     b.Property<string>("Skill")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)")
                         .HasColumnName("skill");
 
                     b.Property<int?>("UserId")
@@ -102,8 +103,8 @@ namespace Cdn.Freelance.Infrastructure.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("character varying(250)")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
                         .HasColumnName("phone_number");
 
                     b.Property<string>("UserName")
@@ -127,7 +128,7 @@ namespace Cdn.Freelance.Infrastructure.Migrations
                     b.HasOne("Cdn.Freelance.Domain.Users.User", null)
                         .WithMany("SkillSets")
                         .HasForeignKey("UserId")
-                        .HasConstraintName("fk_skillset_user_user_id");
+                        .HasConstraintName("fk_skillset_users_user_id");
                 });
 
             modelBuilder.Entity("Cdn.Freelance.Domain.Users.User", b =>

@@ -29,7 +29,7 @@ namespace Cdn.Freelance.Infrastructure.Migrations
                     identity_guid = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     user_name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     email_address = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
-                    phone_number = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    phone_number = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     hobby = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     created_by = table.Column<string>(type: "text", nullable: false),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
@@ -48,14 +48,14 @@ namespace Cdn.Freelance.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    skill = table.Column<string>(type: "text", nullable: false),
+                    skill = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     user_id = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_skillset", x => x.id);
                     table.ForeignKey(
-                        name: "fk_skillset_user_user_id",
+                        name: "fk_skillset_users_user_id",
                         column: x => x.user_id,
                         principalSchema: "freelance",
                         principalTable: "users",

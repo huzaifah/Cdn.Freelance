@@ -9,6 +9,7 @@ namespace Cdn.Freelance.Infrastructure.EntityConfigurations
         public void Configure(EntityTypeBuilder<SkillSet> skillSetConfiguration)
         {
             skillSetConfiguration.ToTable("skillset");
+            skillSetConfiguration.Property(u => u.Skill).HasMaxLength(250).IsRequired();
         }
     }
 }
