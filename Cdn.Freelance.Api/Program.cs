@@ -5,9 +5,10 @@ using Cdn.Freelance.Domain.Users;
 using Cdn.Freelance.Infrastructure;
 using Cdn.Freelance.Infrastructure.Repositories;
 using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Okta.AspNetCore;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Security.Principal;
@@ -28,9 +29,29 @@ namespace Cdn.Freelance.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+            builder.Services.AddAuthentication(OktaDefaults.ApiAuthenticationScheme)
+                .AddOktaWebApi(new OktaWebApiOptions()
+                {
+                    OktaDomain = builder.Configuration["Okta:OktaDomain"],
+                    AuthorizationServerId = builder.Configuration["Okta:AuthorizationServerId"],
+                    Audience = builder.Configuration["Okta:Audience"]
+                });
+
+            builder.Services.AddAuthorization(options =>
+            {
+                options.FallbackPolicy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                options.AddPolicy("cdn:freelance", policy =>
+                {
+                    policy.AuthenticationSchemes = new List<string> { OktaDefaults.ApiAuthenticationScheme };
+                    policy.RequireClaim("http://schemas.microsoft.com/identity/claims/scope", "cdn.freelance");
+                });
+            });
 
             builder.Services.AddControllers();
+            
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>

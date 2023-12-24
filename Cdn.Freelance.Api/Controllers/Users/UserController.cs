@@ -10,12 +10,11 @@ namespace Cdn.Freelance.Api.Controllers.Users
     /// <summary>
     /// User's endpoint.
     /// </summary>
-    [Authorize]
+    [Authorize("cdn:freelance")]
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
     [Tags("User Management")]
-    //[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -33,7 +32,6 @@ namespace Cdn.Freelance.Api.Controllers.Users
         /// </summary>
         /// <param name="userInput">New user information.</param>
         /// <returns>Newly created user identifier.</returns>
-        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

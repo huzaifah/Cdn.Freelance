@@ -31,17 +31,12 @@ namespace Cdn.Freelance.Domain.SeedWork
         /// <summary>
         /// The claim name related to the client_id.
         /// </summary>
-        internal const string ClientIdClaim = "client_id";
+        internal const string ClientIdClaim = "cid";
 
         /// <summary>
         /// The claim name related to the subject.
         /// </summary>
-        internal const string SubjectClaim = "sub";
-
-        /// <summary>
-        /// The claim name related to the actor.
-        /// </summary>
-        internal const string ActorClaim = "act";
+        internal const string SubjectClaim = ClaimTypes.NameIdentifier;
 
         private readonly IPrincipal _principal;
         private readonly IUserComposer _userComposer;
@@ -49,7 +44,6 @@ namespace Cdn.Freelance.Domain.SeedWork
         private string _user;
 
         private readonly object _lockObject = new object();
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UserAccessor"/> class.
@@ -85,21 +79,12 @@ namespace Cdn.Freelance.Domain.SeedWork
                         Claim clientIdClaim = claims.FirstOrDefault(c => c.Type == ClientIdClaim);
 
                         if (clientIdClaim == null)
-                        {
-                            clientIdClaim = new Claim(ClientIdClaim, "Test");
-                            //throw new InvalidOperationException("Unable to retrieve the user from the principal.");
-                        }
-
+                            throw new InvalidOperationException("Unable to retrieve the user from the principal.");
+                        
                         Claim subjectClaim = claims.FirstOrDefault(c => c.Type == SubjectClaim)!;
 
-                        Claim actClaim = claims.FirstOrDefault(c => c.Type == ActorClaim)!;
-                        Dictionary<string, string> actorClaims = null;
-
-                        if (actClaim != null)
-                            actorClaims = JsonSerializer.Deserialize<Dictionary<string, string>>(actClaim.Value)!;
-
                         // Only the case of delegation for client_id is managed (not delegation on subject) because our auth server only manage this case.
-                        _user = _userComposer.Compose(clientIdClaim.Value, subjectClaim?.Value, actorClaims?[ClientIdClaim]);
+                        _user = _userComposer.Compose(clientIdClaim.Value, subjectClaim?.Value);
                         _initialized = true;
                     }
                 }
