@@ -9,10 +9,8 @@ namespace Cdn.Freelance.Infrastructure
 {
     internal class FreelanceContext : DbContext, IUnitOfWork
     {
-        private readonly IMediator _mediator;
-        private IDbContextTransaction _currentTransaction;
-        public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
-        public bool HasActiveTransaction => _currentTransaction != null;
+        private readonly IMediator? _mediator;
+        private IDbContextTransaction? _currentTransaction;
 
         public const string SchemaName = "freelance";
 
@@ -27,7 +25,7 @@ namespace Cdn.Freelance.Infrastructure
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
-            await _mediator.DispatchDomainEventsAsync(this);
+            await _mediator!.DispatchDomainEventsAsync(this);
 
             // After executing this line all the changes (from the Command Handler and Domain Event Handlers) 
             // performed through the DbContext will be committed
@@ -36,7 +34,7 @@ namespace Cdn.Freelance.Infrastructure
             return true;
         }
 
-        public async Task<IDbContextTransaction> BeginTransactionAsync()
+        public async Task<IDbContextTransaction?> BeginTransactionAsync()
         {
             if (_currentTransaction != null) return null;
 

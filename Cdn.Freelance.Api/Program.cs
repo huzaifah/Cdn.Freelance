@@ -1,11 +1,18 @@
+using Cdn.Freelance.Api.Controllers;
+using Cdn.Freelance.Api.Exceptions;
+using Cdn.Freelance.Domain.SeedWork;
+using Cdn.Freelance.Domain.Users;
 using Cdn.Freelance.Infrastructure;
+using Cdn.Freelance.Infrastructure.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
+using System.Security.Principal;
 
-namespace Sample
+namespace Cdn.Freelance.Api
 {
     /// <summary>
     /// 
@@ -21,8 +28,7 @@ namespace Sample
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme);
-                //.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -47,6 +53,24 @@ namespace Sample
                 ).UseSnakeCaseNamingConvention();
             });
 
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddScoped<IPrincipal>(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext!.User!);
+
+            builder.Services.AddSingleton<IUserComposer, DefaultUserComposer>();
+            builder.Services.AddScoped<IUserAccessor, UserAccessor>();
+
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+            builder.Services.AddMediatR(config =>
+            {
+                config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+                config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+            });
+
+            builder.Services.AddProblemDetails();
+            builder.Services.AddExceptionHandler<UserAlreadyExistsExceptionHandler>();
+            builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -56,10 +80,10 @@ namespace Sample
                 app.UseSwaggerUI();
             }
 
+            app.UseExceptionHandler();
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

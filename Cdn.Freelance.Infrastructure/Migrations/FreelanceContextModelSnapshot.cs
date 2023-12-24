@@ -69,7 +69,8 @@ namespace Cdn.Freelance.Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)")
                         .HasColumnName("created_by");
 
                     b.Property<string>("EmailAddress")
@@ -95,7 +96,8 @@ namespace Cdn.Freelance.Infrastructure.Migrations
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)")
                         .HasColumnName("modified_by");
 
                     b.Property<string>("PhoneNumber")

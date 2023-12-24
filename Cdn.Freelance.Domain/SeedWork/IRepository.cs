@@ -1,6 +1,6 @@
 ﻿namespace Cdn.Freelance.Domain.SeedWork;
 
-public interface IRepository<T> where T : IAggregateRoot
+public interface IRepository
 {
     IUnitOfWork UnitOfWork { get; }
 }

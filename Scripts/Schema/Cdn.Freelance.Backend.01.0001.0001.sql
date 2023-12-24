@@ -26,9 +26,9 @@ CREATE TABLE freelance.users (
     email_address character varying(250) NOT NULL,
     phone_number character varying(50) NOT NULL,
     hobby character varying(250),
-    created_by text NOT NULL,
+    created_by character varying(250) NOT NULL,
     created_at timestamp with time zone NOT NULL,
-    modified_by text NOT NULL,
+    modified_by character varying(250) NOT NULL,
     modified_at timestamp with time zone NOT NULL,
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
@@ -46,5 +46,5 @@ CREATE INDEX ix_skillset_user_id ON freelance.skillset (user_id);
 CREATE UNIQUE INDEX ix_users_identity_guid ON freelance.users (identity_guid);
 
 INSERT INTO freelance."__EFMigrationsHistory" (migration_id, product_version)
-VALUES ('20231224035521_CreateUserTable', '8.0.0');
+VALUES ('20231224074237_CreateUserTable', '8.0.0');
 

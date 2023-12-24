@@ -22,6 +22,11 @@ namespace Cdn.Freelance.Infrastructure.EntityConfigurations
             userConfiguration.HasIndex(u => u.IdentityGuid).IsUnique();
 
             userConfiguration.HasMany(u => u.SkillSets).WithOne();
+
+            userConfiguration.Property(o => o.CreatedBy).HasMaxLength(250).IsRequired();
+            userConfiguration.Property(o => o.CreatedAt).IsRequired();
+            userConfiguration.Property(o => o.ModifiedBy).HasMaxLength(250).IsRequired();
+            userConfiguration.Property(o => o.ModifiedAt).IsRequired();
         }
     }
 }

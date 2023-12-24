@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Cdn.Freelance.Infrastructure.Migrations
 {
     [DbContext(typeof(FreelanceContext))]
-    [Migration("20231224035521_CreateUserTable")]
+    [Migration("20231224074237_CreateUserTable")]
     partial class CreateUserTable
     {
         /// <inheritdoc />
@@ -72,7 +72,8 @@ namespace Cdn.Freelance.Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)")
                         .HasColumnName("created_by");
 
                     b.Property<string>("EmailAddress")
@@ -98,7 +99,8 @@ namespace Cdn.Freelance.Infrastructure.Migrations
 
                     b.Property<string>("ModifiedBy")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)")
                         .HasColumnName("modified_by");
 
                     b.Property<string>("PhoneNumber")

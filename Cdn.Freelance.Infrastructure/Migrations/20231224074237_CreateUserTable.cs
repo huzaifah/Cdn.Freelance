@@ -31,9 +31,9 @@ namespace Cdn.Freelance.Infrastructure.Migrations
                     email_address = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     phone_number = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     hobby = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
-                    created_by = table.Column<string>(type: "text", nullable: false),
+                    created_by = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    modified_by = table.Column<string>(type: "text", nullable: false),
+                    modified_by = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
                     modified_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

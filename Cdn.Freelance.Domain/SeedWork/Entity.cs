@@ -19,7 +19,7 @@ namespace Cdn.Freelance.Domain.SeedWork
             }
         }
 
-        private List<INotification> _domainEvents;
+        private readonly List<INotification> _domainEvents;
 
         protected Entity()
         {
@@ -45,7 +45,7 @@ namespace Cdn.Freelance.Domain.SeedWork
 
         public bool IsTransient()
         {
-            return this.Id == default;
+            return Id == default;
         }
 
         public override bool Equals(object obj)
@@ -53,18 +53,18 @@ namespace Cdn.Freelance.Domain.SeedWork
             if (obj is not Entity)
                 return false;
 
-            if (Object.ReferenceEquals(this, obj))
+            if (ReferenceEquals(this, obj))
                 return true;
 
-            if (this.GetType() != obj.GetType())
+            if (GetType() != obj.GetType())
                 return false;
 
             Entity item = (Entity)obj;
 
             if (item.IsTransient() || this.IsTransient())
                 return false;
-            else
-                return item.Id == this.Id;
+            
+            return item.Id == Id;
         }
 
         public override int GetHashCode()
@@ -76,16 +76,16 @@ namespace Cdn.Freelance.Domain.SeedWork
 
                 return _requestedHashCode.Value;
             }
-            else
-                return base.GetHashCode();
 
+            return GetHashCode();
         }
+
         public static bool operator ==(Entity left, Entity right)
         {
-            if (Object.Equals(left, null))
-                return (Object.Equals(right, null)) ? true : false;
-            else
-                return left.Equals(right);
+            if (Equals(left, null))
+                return Equals(right, null);
+
+            return left.Equals(right);
         }
 
         public static bool operator !=(Entity left, Entity right)
