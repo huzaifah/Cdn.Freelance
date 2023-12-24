@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.0.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.0.0" />
     <PackageReference Include="EntityFrameworkCore.NamingConventions" Version="8.0.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
@@ -30,10 +32,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Cdn.Freelance.Domain\Cdn.Freelance.Domain.csproj" />
     <ProjectReference Include="..\Cdn.Freelance.Infrastructure\Cdn.Freelance.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Users\Queries\" />
   </ItemGroup>
 
 </Project>

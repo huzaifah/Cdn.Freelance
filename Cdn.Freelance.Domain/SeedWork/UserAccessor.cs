@@ -26,7 +26,7 @@ namespace Cdn.Freelance.Domain.SeedWork
     /// <summary>
     /// Represents the implementation of <see cref="IUserAccessor"/> using an <see cref="IPrincipal"/> to retrieve the user if not explicitly assigned.
     /// </summary>
-    public class UserAccessor : IUserAccessor
+    internal class UserAccessor : IUserAccessor
     {
         /// <summary>
         /// The claim name related to the client_id.

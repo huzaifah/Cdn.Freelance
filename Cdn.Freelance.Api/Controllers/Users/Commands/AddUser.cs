@@ -19,10 +19,12 @@ namespace Cdn.Freelance.Api.Controllers.Users.Commands
         public class Handler : IRequestHandler<Command, UserIdentifier>
         {
             private readonly IUserRepository _userRepository;
+            private readonly ILogger<Handler> _logger;
 
             public Handler(IUserRepository userRepository, ILogger<Handler> logger)
             {
                 _userRepository = userRepository;
+                _logger = logger;
             }
 
             public async Task<UserIdentifier> Handle(Command request, CancellationToken cancellationToken)

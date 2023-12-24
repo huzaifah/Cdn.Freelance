@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 using System.ComponentModel.DataAnnotations;
+using Asp.Versioning;
 using Cdn.Freelance.Api.Controllers.Users.Commands;
+using Cdn.Freelance.Api.Controllers.Users.Queries;
 
 namespace Cdn.Freelance.Api.Controllers.Users
 {
@@ -12,7 +14,8 @@ namespace Cdn.Freelance.Api.Controllers.Users
     /// </summary>
     [Authorize("cdn:freelance")]
     [ApiController]
-    [Route("[controller]")]
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/users")]
     [Produces("application/json")]
     [Tags("User Management")]
     public class UserController : ControllerBase
@@ -39,6 +42,22 @@ namespace Cdn.Freelance.Api.Controllers.Users
         public async Task<UserIdentifier> CreateAsync([FromBody, Required] UserInput userInput)
         {
             return await _mediator.Send(new AddUser.Command(userInput));
+        }
+
+        /// <summary>
+        /// Get all users.
+        /// </summary>
+        /// <param name="limit">Limit to fetch.</param>
+        /// <param name="offset">Records to offset.</param>
+        /// <returns>Paginated result of users.</returns>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [SwaggerResponseExample(200, typeof(UsersOutputExample))]
+        public async Task<LimitOffsetPagingResultModel<UserOutput>> GetUsersAsync(
+            [FromQuery] [Range(1, 1000)] int limit = 20,
+            [FromQuery] [Range(0, int.MaxValue)] int offset = 0)
+        {
+            return await _mediator.Send(new GetAllUsers.Query(limit, offset));
         }
     }
 }

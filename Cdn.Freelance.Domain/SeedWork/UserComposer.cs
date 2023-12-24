@@ -17,7 +17,7 @@
     /// <summary>
     /// The default user composer
     /// </summary>
-    public class DefaultUserComposer : IUserComposer
+    internal class DefaultUserComposer : IUserComposer
     {
         /// <summary>
         /// Format the user data to the format "clientId/userName"

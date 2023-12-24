@@ -6,6 +6,7 @@ namespace Cdn.Freelance.Domain.Users
     {
         User Add(User user);
         void Update(User user);
+        Task<LimitOffsetPagingResult<User>> GetAllUsersAsync(int limit, int offset);
         Task<User?> FindAsync(string userIdentityGuid);
         Task<User?> FindByIdAsync(int id);
         Task<bool> ExistsAsync(string username, string emailAddress);

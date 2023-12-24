@@ -1,4 +1,4 @@
-﻿namespace Cdn.Freelance.Api.Controllers
+﻿namespace Cdn.Freelance.Api.Controllers.Users
 {
     /// <summary>
     /// User identifier model.

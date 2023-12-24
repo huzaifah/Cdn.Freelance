@@ -30,9 +30,14 @@ namespace Cdn.Freelance.Infrastructure.Repositories
             BeforeSaveChanges();
         }
 
+        public async Task<LimitOffsetPagingResult<User>> GetAllUsersAsync(int limit, int offset)
+        {
+            return await _context.Users.Include(u => u.SkillSets).OrderBy(u => u.UserName).Paginate(new LimitOffsetPagingParameters(limit, offset));
+        }
+
         public async Task<User?> FindAsync(string userIdentityGuid)
         {
-            return await _context.Users.FirstOrDefaultAsync(u => u.IdentityGuid == userIdentityGuid);
+            return await _context.Users.Include(u => u.SkillSets).FirstOrDefaultAsync(u => u.IdentityGuid == userIdentityGuid);
         }
 
         public async Task<User?> FindByIdAsync(int id)

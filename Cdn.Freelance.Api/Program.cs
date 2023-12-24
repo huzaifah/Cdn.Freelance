@@ -51,7 +51,24 @@ namespace Cdn.Freelance.Api
             });
 
             builder.Services.AddControllers();
-            
+            builder.Services.AddApiVersioning(setup =>
+            {
+                //indicating whether a default version is assumed when a client does
+                // does not provide an API version.
+                setup.AssumeDefaultVersionWhenUnspecified = true;
+
+                setup.ReportApiVersions = true;
+            }).AddApiExplorer(options =>
+            {
+                // Add the versioned API explorer, which also adds IApiVersionDescriptionProvider service
+                // note: the specified format code will format the version as "'v'major[.minor][-status]"
+                options.GroupNameFormat = "'v'VVV";
+
+                // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                // can also be used to control the format of the API version in route templates
+                options.SubstituteApiVersionInUrl = true;
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
@@ -98,7 +115,18 @@ namespace Cdn.Freelance.Api
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options =>
+                {
+                    var descriptions = app.DescribeApiVersions();
+
+                    // Build a swagger endpoint for each discovered API version
+                    foreach (var description in descriptions)
+                    {
+                        var url = $"/swagger/{description.GroupName}/swagger.json";
+                        var name = description.GroupName.ToUpperInvariant();
+                        options.SwaggerEndpoint(url, name);
+                    }
+                });
             }
 
             app.UseExceptionHandler();
