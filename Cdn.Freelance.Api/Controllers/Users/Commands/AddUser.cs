@@ -31,6 +31,8 @@ namespace Cdn.Freelance.Api.Controllers.Users.Commands
             {
                 var user = request.User;
 
+                _logger.LogInformation("Add new user {UserName}.", user.UserName);
+
                 if (await _userRepository.ExistsAsync(user.UserName, user.EmailAddress))
                     throw new UserAlreadyExistsException($"User {user.UserName}, {user.EmailAddress} already exists.");
 
@@ -44,6 +46,8 @@ namespace Cdn.Freelance.Api.Controllers.Users.Commands
                 _userRepository.Add(domain);
 
                 await _userRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
+
+                _logger.LogInformation("New user {UserName} created {UserIdentifier}.", user.UserName, userIdentifier);
 
                 return new UserIdentifier() { Identifier = userIdentifier };
             }

@@ -39,6 +39,20 @@ namespace Cdn.Freelance.Domain.Users
                 Hobby = hobby;
         }
 
+        public void Update(string emailAddress, string phoneNumber, string? hobby)
+        {
+            EmailAddress = emailAddress;
+            PhoneNumber = phoneNumber;
+            Hobby = hobby;
+
+            new UserValidator().ValidateAndThrow(this);
+        }
+
+        public void RemoveExistingSkillSets()
+        {
+            _skillSets.Clear();
+        }
+
         public void UpdateSkillSets(List<string> skillSets)
         {
             var latestSkillSets = skillSets.ConvertAll(s => new SkillSet(s));

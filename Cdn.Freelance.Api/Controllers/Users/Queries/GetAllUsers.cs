@@ -31,6 +31,8 @@ namespace Cdn.Freelance.Api.Controllers.Users.Queries
 
             public async Task<LimitOffsetPagingResultModel<UserOutput>> Handle(Query request, CancellationToken cancellationToken)
             {
+                _logger.LogInformation("Get all users information.");
+
                 var result = await _userRepository.GetAllUsersAsync(request.Limit, request.Offset);
                 return result.MapToLimitOffsetPagingResultModel(u => u.ToContract());
             }

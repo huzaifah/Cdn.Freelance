@@ -52,6 +52,17 @@ namespace Cdn.Freelance.Infrastructure.Repositories
                 u.EmailAddress == emailAddress);
         }
 
+        public async Task<bool> EmailAddressExistsAsync(string userNameToUpdate, string emailAddress)
+        {
+            return await _context.Users.AnyAsync(u =>
+                u.EmailAddress == emailAddress && u.UserName.ToLower() != userNameToUpdate.ToLower());
+        }
+
+        public void DeleteAsync(User user)
+        {
+            _context.Users.Remove(user);
+        }
+
         protected void BeforeSaveChanges()
         {
             var now = DateTime.UtcNow;

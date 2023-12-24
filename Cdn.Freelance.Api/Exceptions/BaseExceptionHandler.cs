@@ -38,6 +38,8 @@ namespace Cdn.Freelance.Api.Exceptions
 
             _logger.LogError(exception, ErrorMessage);
 
+            httpContext.Response.StatusCode = (int)StatusCode;
+
             await httpContext.Response.WriteAsJsonAsync(new ProblemDetails
             {
                 Status = (int)StatusCode,

@@ -36,12 +36,28 @@ namespace Cdn.Freelance.Api.Controllers.Users
         /// <param name="userInput">New user information.</param>
         /// <returns>Newly created user identifier.</returns>
         [HttpPost]
+        [SwaggerRequestExample(typeof(UserInput), typeof(UserInputExample))]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [SwaggerResponseExample(200, typeof(UserIdentifierExample))]
         public async Task<UserIdentifier> CreateAsync([FromBody, Required] UserInput userInput)
         {
             return await _mediator.Send(new AddUser.Command(userInput));
+        }
+
+        /// <summary>
+        /// Update user.
+        /// </summary>
+        /// <param name="identifier">User identifier.</param>
+        /// <param name="updateUserInput">Updated user information.</param>
+        [HttpPut, Route("{identifier}")]
+        [SwaggerRequestExample(typeof(UpdateUserInput), typeof(UpdateUserInputExample))]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateAsync([FromRoute, Required, MaxLength(50)] string identifier, [FromBody, Required] UpdateUserInput updateUserInput)
+        {
+            await _mediator.Send(new UpdateUser.Command(identifier, updateUserInput));
+            return NoContent();
         }
 
         /// <summary>
@@ -72,6 +88,19 @@ namespace Cdn.Freelance.Api.Controllers.Users
         public async Task<UserOutput> GetUserAsync([FromRoute, Required, MaxLength(50)] string identifier)
         {
             return await _mediator.Send(new GetUserByIdentifier.Query(identifier));
+        }
+
+        /// <summary>
+        /// Delete user by identifier.
+        /// </summary>
+        /// <param name="identifier">User identifier.</param>
+        [HttpDelete, Route("{identifier}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteUserAsync([FromRoute, Required, MaxLength(50)] string identifier)
+        {
+            await _mediator.Send(new DeleteUser.Command(identifier));
+            return NoContent();
         }
     }
 }

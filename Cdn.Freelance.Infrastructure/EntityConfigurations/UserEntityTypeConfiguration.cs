@@ -21,7 +21,7 @@ namespace Cdn.Freelance.Infrastructure.EntityConfigurations
             userConfiguration.HasKey(u => u.Id);
             userConfiguration.HasIndex(u => u.IdentityGuid).IsUnique();
 
-            userConfiguration.HasMany(u => u.SkillSets).WithOne();
+            userConfiguration.HasMany(u => u.SkillSets).WithOne().OnDelete(DeleteBehavior.Cascade);
 
             userConfiguration.Property(o => o.CreatedBy).HasMaxLength(250).IsRequired();
             userConfiguration.Property(o => o.CreatedAt).IsRequired();

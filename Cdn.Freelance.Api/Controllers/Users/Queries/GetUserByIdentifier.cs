@@ -29,6 +29,8 @@ namespace Cdn.Freelance.Api.Controllers.Users.Queries
 
             public async Task<UserOutput> Handle(Query request, CancellationToken cancellationToken)
             {
+                _logger.LogInformation("Get user information {UserIdentifier}.", request.Identifier);
+
                 var user = await _userRepository.FindAsync(request.Identifier);
 
                 if (user is null)
