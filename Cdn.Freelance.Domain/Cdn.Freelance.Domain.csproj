@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Infrastructure" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Api" />
     <InternalsVisibleTo Include="Cdn.Freelance.Domain.Tests" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Infrastructure.Tests" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Api.Tests" />
   </ItemGroup>
 </Project>
