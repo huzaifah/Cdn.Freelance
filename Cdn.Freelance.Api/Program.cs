@@ -112,24 +112,20 @@ namespace Cdn.Freelance.Api
             builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
             var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
             {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    var descriptions = app.DescribeApiVersions();
+                var descriptions = app.DescribeApiVersions();
 
-                    // Build a swagger endpoint for each discovered API version
-                    foreach (var description in descriptions)
-                    {
-                        var url = $"/swagger/{description.GroupName}/swagger.json";
-                        var name = description.GroupName.ToUpperInvariant();
-                        options.SwaggerEndpoint(url, name);
-                    }
-                });
-            }
+                // Build a swagger endpoint for each discovered API version
+                foreach (var description in descriptions)
+                {
+                    var url = $"/swagger/{description.GroupName}/swagger.json";
+                    var name = description.GroupName.ToUpperInvariant();
+                    options.SwaggerEndpoint(url, name);
+                }
+            });
 
             app.UseExceptionHandler();
             app.UseHttpsRedirection();
