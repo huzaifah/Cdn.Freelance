@@ -65,6 +65,22 @@ Use your favourite REST client tool to make request to available endpoints.
 
 Ensure that you have valid token before making the request.
 
+## Unit Tests
+
+There are three unit tests developed:
+
+* Domain - Domain business logic and validation
+* Infrastructure - Repository using Entity Framework In Memory
+* API - Command, Query and Handlers
+
+You can execute unit tests with following command:
+
+```
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+Result of the unit tests and code coverage are collected using Coverlet package.
+
 ## Built With
 
 * [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) - Integrated Development Environment

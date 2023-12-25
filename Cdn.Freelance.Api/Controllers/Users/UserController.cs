@@ -17,7 +17,7 @@ namespace Cdn.Freelance.Api.Controllers.Users
     [ApiVersion("1")]
     [Route("api/v{version:apiVersion}/users")]
     [Produces("application/json")]
-    [Tags("User Management")]
+    [Tags("Users Management")]
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
