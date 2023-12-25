@@ -3,7 +3,7 @@ name: publish-cdn.freelance
 on:
   workflow_dispatch:
   push:
-    branches: [ "master", "develop" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
@@ -34,7 +34,6 @@ jobs:
         
     - name: Test
       run: |
-        cd DotNet.WebApp.Tests
         dotnet test --no-restore --verbosity normal
       
     - uses: azure/webapps-deploy@v2

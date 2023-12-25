@@ -90,10 +90,6 @@ Result of the unit tests and code coverage are collected using Coverlet package.
 * [Visual Studio 2022](https://visualstudio.microsoft.com/vs/) - Integrated Development Environment
 * [ASP.NET Core 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) - .NET Runtime Version
 
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/huzaifah/Cdn.Freelance/tags). 
-
 ## Author
 
 * **Huzaifah Dzulkifli** - *Initial work*
