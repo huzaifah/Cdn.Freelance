@@ -34,4 +34,9 @@
     <ProjectReference Include="..\Cdn.Freelance.Infrastructure\Cdn.Freelance.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Api.Tests" />
+  </ItemGroup>
+
 </Project>

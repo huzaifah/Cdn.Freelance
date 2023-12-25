@@ -16,5 +16,7 @@
     <InternalsVisibleTo Include="Cdn.Freelance.Infrastructure" />
     <InternalsVisibleTo Include="Cdn.Freelance.Api" />
     <InternalsVisibleTo Include="Cdn.Freelance.Domain.Tests" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Infrastructure.Tests" />
+    <InternalsVisibleTo Include="Cdn.Freelance.Api.Tests" />
   </ItemGroup>
 </Project>

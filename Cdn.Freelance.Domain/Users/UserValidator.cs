@@ -6,7 +6,7 @@ namespace Cdn.Freelance.Domain.Users
     {
         public UserValidator()
         {
-            RuleFor(user => user.IdentityGuid).NotEmpty();
+            RuleFor(user => user.IdentityGuid).MaximumLength(50).NotEmpty();
             RuleFor(user => user.EmailAddress).NotEmpty().MaximumLength(250).EmailAddress();
             RuleFor(user => user.Hobby).MaximumLength(250);
             RuleFor(user => user.PhoneNumber).NotEmpty().MaximumLength(50);

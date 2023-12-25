@@ -58,7 +58,7 @@ namespace Cdn.Freelance.Infrastructure.Repositories
                 u.EmailAddress == emailAddress && u.UserName.ToLower() != userNameToUpdate.ToLower());
         }
 
-        public void DeleteAsync(User user)
+        public void Delete(User user)
         {
             _context.Users.Remove(user);
         }

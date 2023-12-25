@@ -1,5 +1,6 @@
 ﻿using Cdn.Freelance.Domain.Users;
 using FluentAssertions;
+using FluentValidation;
 
 namespace Cdn.Freelance.Domain.Tests.Users
 {   
@@ -14,6 +15,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         private const string SkillOne = "Skill One";
         private const string SkillTwo = "Skill Two";
         private const string SkillThree = "Skill Three";
+        private const string LongText = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         public UserTests()
         {
@@ -21,13 +23,47 @@ namespace Cdn.Freelance.Domain.Tests.Users
         }
 
         [Fact]
-        public void User_ValidArguments_Ok()
+        public void User_Build_ValidArguments_Ok()
         {
             _user.IdentityGuid.Should().Be(IdentifierGuid);
             _user.UserName.Should().Be(UserName);
             _user.EmailAddress.Should().Be(EmailAddress);
             _user.PhoneNumber.Should().Be(PhoneNumber);
             _user.Hobby.Should().Be(Hobby);
+        }
+
+        [Fact]
+        public void User_Build_EmptyArguments_ThrowException()
+        {
+            Action action = () => User.Build("", "", "", "", "");
+            action.Should().Throw<ValidationException>();
+        }
+
+        [Fact]
+        public void User_Build_TextExceedMaxLength_ThrowException()
+        {
+            Action action = () => User.Build(LongText, LongText, LongText, LongText, LongText);
+            action.Should().Throw<ValidationException>();
+        }
+
+        [Fact]
+        public void User_Update_ValidArguments_Ok()
+        {
+            string updatedEmailAddress = "mark.dowle@outlook.com";
+            string updatedPhoneNumber = "1234567890";
+
+            _user.Update(updatedEmailAddress, updatedPhoneNumber, null);
+
+            _user.EmailAddress.Should().Be(updatedEmailAddress);
+            _user.PhoneNumber.Should().Be(updatedPhoneNumber);
+            _user.Hobby.Should().BeNull();
+        }
+
+        [Fact]
+        public void User_Update_EmptyArguments_ThrowException()
+        {
+            Action action = () => _user.Update("", "", "");
+            action.Should().Throw<ValidationException>();
         }
 
         [Fact]
@@ -38,7 +74,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         }
 
         [Fact]
-        public void User_InitializeSkillSets_Ok()
+        public void User_UpdateSkillSets_Initialize_Ok()
         {
             var skillSets = new List<string> { SkillOne, SkillTwo };
             var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
@@ -50,7 +86,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         }
 
         [Fact]
-        public void User_RemoveExistingSkillSets_Ok()
+        public void User_UpdateSkillSets_NotEmpty_Ok()
         {
             var skillSets = new List<string> { SkillOne, SkillTwo };
             var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
@@ -64,7 +100,7 @@ namespace Cdn.Freelance.Domain.Tests.Users
         }
 
         [Fact]
-        public void User_AddNewSkillSets_Ok()
+        public void User_UpdateSkillSets_NewSkillSets_Ok()
         {
             var skillSets = new List<string> { SkillOne, SkillTwo };
             var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
@@ -75,6 +111,24 @@ namespace Cdn.Freelance.Domain.Tests.Users
 
             user.SkillSets.Should().HaveCount(3);
             user.SkillSets.Should().ContainSingle(s => s.Skill == SkillThree);
+        }
+
+        [Fact]
+        public void User_UpdateSkillSets_EmptyList_ThrowException()
+        {
+            Action action = () => _user.UpdateSkillSets(new List<string> { "", "" });
+            action.Should().Throw<ValidationException>();
+        }
+
+        [Fact]
+        public void User_RemoveExistingSkillSets_Ok()
+        {
+            var skillSets = new List<string> { SkillOne, SkillTwo };
+            var user = User.Build(IdentifierGuid, UserName, EmailAddress, PhoneNumber, null);
+            user.UpdateSkillSets(skillSets);
+            user.RemoveExistingSkillSets();
+
+            user.SkillSets.Should().BeEmpty();
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Cdn.Freelance.Api.Controllers.Users.Commands
 
                 _logger.LogInformation("Delete existing user {UserName}.", domain.UserName);
 
-                _userRepository.DeleteAsync(domain);
+                _userRepository.Delete(domain);
 
                 await _userRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
 

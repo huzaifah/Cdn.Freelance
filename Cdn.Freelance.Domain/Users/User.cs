@@ -73,8 +73,9 @@ namespace Cdn.Freelance.Domain.Users
                 if (!_skillSets.Exists(s => s.Skill == skill))
                     _skillSets.Add(new SkillSet(skill));
             }
-        }
 
+            new UserValidator().ValidateAndThrow(this);
+        }
     }
 
     internal class SkillSetEqualityComparer : IEqualityComparer<SkillSet>

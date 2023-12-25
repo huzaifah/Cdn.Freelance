@@ -11,6 +11,6 @@ namespace Cdn.Freelance.Domain.Users
         Task<User?> FindByIdAsync(int id);
         Task<bool> ExistsAsync(string username, string emailAddress);
         Task<bool> EmailAddressExistsAsync(string userNameToUpdate, string emailAddress);
-        void DeleteAsync(User user);
+        void Delete(User user);
     }
 }
