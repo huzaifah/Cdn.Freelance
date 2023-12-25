@@ -11,6 +11,9 @@ This app is to manage the CDN freelancers information:
 * Get all users (with pagination)
 * Get single user information
 
+This app is published and deployed to Azure App Service via Github Action
+[CDN Freelancers on Azure App Service](https://cdn-freelance.azurewebsites.net/swagger/index.html)
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
@@ -43,7 +46,7 @@ Update the appsettings.json file for database connection.
 
 This solution is integrated with Okta Open ID Connect provider.
 
-Create an Okta developer account (https://developer.okta.com/signup/) and add the following settings in your solution with the correct Okta domain for your Okta developer account.
+Create an Okta developer account [Okta Developer sign up](https://developer.okta.com/signup/) and add the following settings in your solution with the correct Okta domain for your Okta developer account.
 
 ```
 "Okta": {
