@@ -37,7 +37,9 @@ Update the appsettings.json file for database connection.
 },
 ```
 
-Update the appsettings.json file with your chosen Open ID Identity Provider. Example:
+This solution is integrated with Okta Open ID Connect provider.
+
+Create an Okta developer account (https://developer.okta.com/signup/) and add the following settings in your solution with the correct Okta domain for your Okta developer account.
 
 ```
 "Okta": {
@@ -46,6 +48,8 @@ Update the appsettings.json file with your chosen Open ID Identity Provider. Exa
     "Audience": "api://default"
 }
 ```
+
+Create a custom scope in Okta to access this app. The scope should be named as `cdn.freelance`.
 
 ### Running the app
 
