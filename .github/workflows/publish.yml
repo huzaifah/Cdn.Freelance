@@ -2,10 +2,6 @@ name: publish-cdn.freelance
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
 
 env:
   AZURE_WEBAPP_NAME: cdn-freelance
@@ -30,7 +26,7 @@ jobs:
     - name: Build
       run: |
         dotnet build --configuration Release --no-restore
-        dotnet publish ./Cdn.Freelance.Api/Cdn.Freelance.Api.csproj -c Release -o ../publish -r linux-x64 --self-contained true /p:UseAppHost=true
+        dotnet publish ./Cdn.Freelance.Api/Cdn.Freelance.Api.csproj -c Release -o ./publish -r linux-x64 --self-contained true /p:UseAppHost=true
         
     - name: Test
       run: |
