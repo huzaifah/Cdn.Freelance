@@ -1,5 +1,9 @@
 # Complete Developer Network (CDN) Freelancers
 
+[![build-cdn.freelance](https://github.com/huzaifah/Cdn.Freelance/actions/workflows/build.yml/badge.svg)](https://github.com/huzaifah/Cdn.Freelance/actions/workflows/build.yml)
+
+[![publish-cdn.freelance](https://github.com/huzaifah/Cdn.Freelance/actions/workflows/publish.yml/badge.svg)](https://github.com/huzaifah/Cdn.Freelance/actions/workflows/publish.yml)
+
 This app is to manage the CDN freelancers information:
 * Create new user
 * Update existing user
