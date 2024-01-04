@@ -1,5 +1,7 @@
 using Cdn.Freelance.Api.Controllers;
 using Cdn.Freelance.Api.Exceptions;
+using Cdn.Freelance.Api.LayoutRenderers;
+using Cdn.Freelance.Api.Middlewares;
 using Cdn.Freelance.Domain.SeedWork;
 using Cdn.Freelance.Domain.Users;
 using Cdn.Freelance.Infrastructure;
@@ -8,6 +10,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using NLog;
+using NLog.Web;
 using Okta.AspNetCore;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
@@ -111,6 +115,20 @@ namespace Cdn.Freelance.Api
             builder.Services.AddExceptionHandler<ItemNotFoundExceptionHandler>();
             builder.Services.AddExceptionHandler<DefaultExceptionHandler>();
 
+            builder.Host.UseNLog().ConfigureLogging((context, builder) =>
+            {
+                builder.ClearProviders();
+
+                LogManager.Setup().SetupExtensions(s =>
+                {
+                    s.RegisterLayoutRenderer<CorrelationIdLayoutRenderer>("correlation-id");
+                });
+
+                var configuration =
+                    new NLog.Extensions.Logging.NLogLoggingConfiguration(context.Configuration.GetSection("NLog"));
+                builder.AddNLog(configuration);
+            });
+
             var app = builder.Build();
             
             app.UseSwagger();
@@ -126,6 +144,8 @@ namespace Cdn.Freelance.Api
                     options.SwaggerEndpoint(url, name);
                 }
             });
+
+            app.UseMiddleware<CorrelationIdMiddleware>();
 
             app.UseExceptionHandler();
             app.UseHttpsRedirection();
