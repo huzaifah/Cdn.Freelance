@@ -16,6 +16,7 @@ using Okta.AspNetCore;
 using Swashbuckle.AspNetCore.Filters;
 using System.Reflection;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 namespace Cdn.Freelance.Api
 {
@@ -95,6 +96,9 @@ namespace Cdn.Freelance.Api
                 ).UseSnakeCaseNamingConvention();
             });
 
+            builder.Services.AddHealthChecks()
+                .AddDbContextCheck<FreelanceContext>("dbContextChecks", null, new List<string> { "Readiness" });
+
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddScoped<IPrincipal>(sp => sp.GetService<IHttpContextAccessor>()!.HttpContext!.User!);
 
@@ -150,7 +154,13 @@ namespace Cdn.Freelance.Api
             app.UseExceptionHandler();
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.MapHealthChecks("/healthz/ready", new HealthCheckOptions()
+            {
+                Predicate = healthCheck => healthCheck.Tags.Contains("Readiness")
+            }).RequireAuthorization();
 
             app.MapControllers();
 
